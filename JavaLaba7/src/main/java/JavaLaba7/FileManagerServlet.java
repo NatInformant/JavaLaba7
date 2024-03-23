@@ -1,6 +1,6 @@
 package JavaLaba7;
 
-import JavaLaba7.Service.AccountService;
+import JavaLaba7.Service.DBService;
 import JavaLaba7.Service.FileSystemElementsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,7 +23,7 @@ public class FileManagerServlet extends HttpServlet {
         String login = (String)httpServletRequest.getSession().getAttribute("login");
         String pass = (String)httpServletRequest.getSession().getAttribute("pass");
 
-        if (AccountService.getUserByLogin(login)==null || !AccountService.getUserByLogin(login).getPass().equals(pass)) {
+        if (DBService.getUserByLogin(login)==null || !DBService.getUserByLogin(login).getPass().equals(pass)) {
             String currentURL = httpServletRequest.getRequestURL().toString();
             httpServletResponse.sendRedirect(ServletUtilities.makeNewUrl(currentURL, "/log"));
             return;

@@ -1,7 +1,7 @@
 package JavaLaba7;
 
-import JavaLaba7.Model.UserProfile;
-import JavaLaba7.Service.AccountService;
+import JavaLaba7.DataSets.UserProfileDataSet;
+import JavaLaba7.Service.DBService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,7 +29,7 @@ public class SessionsServlet extends HttpServlet {
             return;
         }
 
-        UserProfile profile = AccountService.getUserByLogin(login);
+        UserProfileDataSet profile = DBService.getUserByLogin(login);
         if (profile == null || !profile.getPass().equals(pass)) {
             httpServletResponse.setContentType("text/html;charset=utf-8");
             httpServletResponse.getWriter().println("Неправильный логин или пароль");

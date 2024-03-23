@@ -1,7 +1,7 @@
 package JavaLaba7;
 
-import JavaLaba7.Model.UserProfile;
-import JavaLaba7.Service.AccountService;
+import JavaLaba7.DataSets.UserProfileDataSet;
+import JavaLaba7.Service.DBService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,13 +32,8 @@ public class UsersServlet extends HttpServlet {
             return;
         }
 
-        UserProfile profile = new UserProfile(login, pass, email);
-        if (AccountService.getUserByLogin(login) == null) {
-            AccountService.addNewUser(profile);
-
-            httpServletRequest.getSession().setAttribute("login",login);
-            httpServletRequest.getSession().setAttribute("pass",pass);
-
+        UserProfileDataSet profile = new UserProfileDataSet(login, pass, email);
+        if (DBService.getUserByLogin(login) == null) {
             // Создание новой папки для пользователя
             File folder = new File("C:\\Users\\Informant\\fileManager\\" + login);
             boolean isCreationSuccess = folder.mkdir();
@@ -48,6 +43,11 @@ public class UsersServlet extends HttpServlet {
                 httpServletResponse.getWriter().println("Случилась ошибка при создании папки, попробуйте ещё раз");
                 return;
             }
+
+            DBService.addNewUser(profile);
+
+            httpServletRequest.getSession().setAttribute("login",login);
+            httpServletRequest.getSession().setAttribute("pass",pass);
 
             String currentURL = httpServletRequest.getRequestURL().toString();
             httpServletResponse.sendRedirect(ServletUtilities.makeNewUrl(currentURL, "/manager"));
