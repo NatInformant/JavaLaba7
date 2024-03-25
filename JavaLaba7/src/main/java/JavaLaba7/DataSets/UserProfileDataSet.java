@@ -11,11 +11,11 @@ public class UserProfileDataSet implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "login", unique = true, updatable = false)
+    @Column(name = "login", unique = true, updatable = false, nullable = false)
     private String login;
-    @Column(name = "password", updatable = false)
+    @Column(name = "password", updatable = false, nullable = false)
     private String pass;
-    @Column(name = "email", updatable = false)
+    @Column(name = "email", updatable = false, nullable = false)
     private String email;
 
     //Important to Hibernate!
